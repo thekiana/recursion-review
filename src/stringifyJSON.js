@@ -13,6 +13,8 @@ var stringifyJSON = function (obj) {
     return "" + obj;
   } else if (obj === null) {
     return "" + null;
+  } else if (obj === undefined) {
+    return undefined;
   }
 
   if (Array.isArray(obj)) {
@@ -30,8 +32,8 @@ var stringifyJSON = function (obj) {
   }
 
   if (typeof obj === "object") {
-    debugger;
     var result = "";
+    var arr = [];
 
     if (Object.keys(obj).length === 0) {
       return "{}";
@@ -40,17 +42,14 @@ var stringifyJSON = function (obj) {
     for (var key in obj) {
       var value = obj[key];
 
-      if (Object.keys(obj).length === 1) {
-        result += `"${key}":${stringifyJSON(value)}`;
+      if (typeof value === "function" || value === undefined) {
+        continue;
       }
 
-      result += `"${key}":${stringifyJSON(value)}, `;
+      result = `"${key}":${stringifyJSON(value)}`;
+      arr.push(result);
     }
 
-    return "{" + result + "}";
+    return "{" + arr + "}";
   }
 };
-
-// ideas to fix line 47
-// var keyArr = Object.keys(obj);
-// var lastEle = keyArr[keyArr.length - 1];
