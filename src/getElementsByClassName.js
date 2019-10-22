@@ -20,10 +20,9 @@ var getElementsByClassName = function (className) {
     }
 
     return elementList;
-  }
+  };
 
 
   classCheck(body);
   return elementList;
-
 };
